@@ -1,0 +1,15 @@
+jupyter:
+  image: jupyter/scipy-notebook
+  container_name: jupyter
+  env_file:
+    - .env
+  ports:
+    - "8888:8888"
+  volumes:
+    - ./notebooks:/home/jovyan
+  environment:
+    - JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB}
+    - JUPYTER_ALLOW_ROOT=${JUPYTER_ALLOW_ROOT}
+    - GRANT_SUDO=${GRANT_SUDO}
+  command: start-notebook.sh --NotebookApp.token='' --NotebookApp.password=${JUPYTER_PASSWORD} 
+  user: root
