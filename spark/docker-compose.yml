@@ -1,0 +1,45 @@
+version: '3.7'
+  
+services:
+ spark-master:
+  image: bitnami/spark:3.5-debian-12
+  ports:
+        - "9090:8080"
+        - "7077:7077"
+  environment:
+        SPARK_MODE: master
+        SPARK_RPC_AUTHENTICATION_ENABLED: no
+        SPARK_RPC_ENCRYPTION_ENABLED: no
+        SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: no
+        SPARK_SSL_ENABLED: no
+        SPARK_USER: spark
+
+ spark-worker-1:
+  image: bitnami/spark:3.5-debian-12
+  depends_on:
+        - spark-master
+  environment:
+        SPARK_MODE: worker
+        SPARK_WORKER_CORES: 1
+        SPARK_WORKER_MEMORY: 2g
+        SPARK_MASTER_URL: spark://spark-master:7077
+        SPARK_RPC_AUTHENTICATION_ENABLED: no
+        SPARK_RPC_ENCRYPTION_ENABLED: no
+        SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: no
+        SPARK_SSL_ENABLED: no
+        SPARK_USER: spark
+
+ spark-worker-2:
+  image: bitnami/spark:3.5-debian-12
+  depends_on:
+        - spark-master
+  environment:
+        SPARK_MODE: worker       
+        SPARK_WORKER_CORES: 1
+        SPARK_WORKER_MEMORY: 2g
+        SPARK_MASTER_URL: spark://spark-master:7077
+        SPARK_RPC_AUTHENTICATION_ENABLED: no
+        SPARK_RPC_ENCRYPTION_ENABLED: no
+        SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: no
+        SPARK_SSL_ENABLED: no
+        SPARK_USER: spark
