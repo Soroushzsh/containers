@@ -1,0 +1,12 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /usr/share/filebeat/logs/stream-fun*
+  fields:
+    log_type: fun-stream     
+  json.keys_under_root: true
+  json.add_error_key: true
+
+output.logstash:
+  hosts: ["logstash:5044"]
