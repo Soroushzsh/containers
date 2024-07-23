@@ -1,0 +1,21 @@
+version: '3.8' 
+
+services:
+  clickhouse-server:
+    image: clickhouse/clickhouse-server:24.4.3
+    container_name: clickhouse-server 
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    ulimits:
+      nofile:
+        soft: 262144  # Soft limit for number of open files
+        hard: 262144  # Hard limit for number of open files
+    user: "appuser:appuser"
+    volumes:
+      - /data/clickhouse_data:/var/lib/clickhouse
+      - ./logs:/var/log/clickhouse-server  
+      # - ./config/*.xml:/etc/clickhouse-server/config.d/*.xml
+      #- ./users/*.xml:/etc/clickhouse-server/users.d/*.xml
+    restart: unless-stopped
+
