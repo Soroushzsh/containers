@@ -1,0 +1,15 @@
+services:
+  kowl:
+    image: quay.io/cloudhut/kowl:master
+    container_name: kowl
+    ports:
+      - "8090:8080"
+    environment:
+      KAFKA_BROKERS: ${KAFKA_BROKERS}
+      KAFKA_TLS_ENABLED: "false"
+    networks:
+      - kafka-network
+
+networks:
+  kafka-network:
+    external: true
